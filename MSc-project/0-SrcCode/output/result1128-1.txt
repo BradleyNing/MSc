@@ -1,0 +1,31 @@
+INFO:root:In GPAL Admin
+INFO:root:11:55:36
+INFO:root:self.preProcessOption: Coding_aws_banking
+INFO:root:LogisticRegression grid searching...
+INFO:root:11:55:36
+/home/nzl-lenovo/.local/lib/python2.7/site-packages/sklearn/externals/joblib/parallel.py:547: UserWarning: Multiprocessing-backed parallel loops cannot be nested below threads, setting n_jobs=1
+  **self._backend_args)
+INFO:root:KNeighborsClassifier grid searching...
+INFO:root:11:55:54
+INFO:root:RandomForestClassifier grid searching...
+INFO:root:12:03:39
+INFO:root:VotingClassifier grid searching...
+INFO:root:12:15:25
+INFO:root:12:35:14
+INFO:werkzeug:192.168.1.193 - - [28/Nov/2017 12:35:14] "POST /daas/GPAL HTTP/1.1" 201 -
+
+INFO:root:In GPAL Admin
+INFO:root:12:57:08
+INFO:root:self.preProcessOption: Coding_aws_banking
+INFO:root:LogisticRegression grid searching...
+INFO:root:12:57:09
+/home/nzl-lenovo/.local/lib/python2.7/site-packages/sklearn/externals/joblib/parallel.py:547: UserWarning: Multiprocessing-backed parallel loops cannot be nested below threads, setting n_jobs=1
+  **self._backend_args)
+INFO:root:KNeighborsClassifier grid searching...
+INFO:root:12:57:26
+INFO:root:RandomForestClassifier grid searching...
+INFO:root:12:59:57
+INFO:root:VotingClassifier grid searching...
+INFO:root:13:00:07
+INFO:root:13:03:08
+INFO:werkzeug:192.168.1.193 - - [28/Nov/2017 13:03:08] "POST /daas/GPAL HTTP/1.1" 201 -

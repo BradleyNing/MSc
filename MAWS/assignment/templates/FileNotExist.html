@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+<h3>File not exist yet, try to create or import one!</h3>
+
+<p><a href="{{ url_for('index') }}">Click here to index</a>.</p>
+{% endblock %}

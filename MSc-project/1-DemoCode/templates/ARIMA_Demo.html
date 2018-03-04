@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+<h3>1. Upload time series file </h3>
+<form method="post" enctype="multipart/form-data">
+    {{ importRawDataForm.hidden_tag() }}
+    <table border="1px" class="table">
+    <tr>
+        <td> {{wtf.form_field(importRawDataForm.rawData)}} </td>
+        <td> {{wtf.form_field(importRawDataForm.fileHeadOption)}} </td>
+        <td> {{wtf.form_field(importRawDataForm.indexCol)}} </td>
+    </tr>
+    </table>
+    {{wtf.form_field(importRawDataForm.rawDataSubmit)}}
+    {{wtf.form_field(importRawDataForm.trainText)}} 
+</form>
+<hr/>
+<br>
+
+<h3>2. Stationarity and White Noise Test </h3>
+<form method="post" enctype="multipart/form-data">
+    {{ statNoiseTestForm.hidden_tag() }}
+    <table border="1px" class="table">
+    <tr>
+        <td> {{wtf.form_field(statNoiseTestForm.testColumn)}} </td>
+        <td> {{wtf.form_field(statNoiseTestForm.resampleInterval)}} </td>
+    </tr>
+    </table>
+    {{wtf.form_field(statNoiseTestForm.statNoiseSubmit)}}
+    {{wtf.form_field(statNoiseTestForm.statNoiseText)}}
+<img src="{{url_for('static', filename=stat_noise_image)}}"  height="500" width="800" alt='stat_noise_image'>
+</form>    
+<hr/>
+<br>
+
+<h3>3. Differention </h3>
+<form method="post" enctype="multipart/form-data">
+    {{ differentionForm.hidden_tag() }}
+    {{wtf.form_field(differentionForm.diffOrder)}}
+    {{wtf.form_field(differentionForm.diffSubmit)}}
+    {{wtf.form_field(differentionForm.diffText)}}
+</form>
+<hr/>
+<br>
+
+<h3>4. Search Best p,d,q </h3>
+<form method="post" enctype="multipart/form-data">
+    {{ getPDQForm.hidden_tag() }}
+    <table border="1px" class="table">
+    <tr>
+        <td>{{wtf.form_field(getPDQForm.pValue)}}</td>
+        <td>{{wtf.form_field(getPDQForm.dValue)}}</td>
+        <td>{{wtf.form_field(getPDQForm.qValue)}}</td>
+    </tr>
+    </table>
+    {{wtf.form_field(getPDQForm.pdqSubmit)}}
+    {{wtf.form_field(getPDQForm.pdqText)}}
+</form>
+<hr/>
+<br>
+
+<h3>5. Set ARIMA Model and Training</h3>
+<form method="post" enctype="multipart/form-data">
+    {{ setModelForm.hidden_tag() }}
+    <table border="1px" class="table">
+    <tr>
+        <td>{{wtf.form_field(setModelForm.pValue)}}</td>
+        <td>{{wtf.form_field(setModelForm.dValue)}}</td>
+        <td>{{wtf.form_field(setModelForm.qValue)}}</td>
+    </tr>
+    <tr>
+        <td>{{wtf.form_field(setModelForm.startOfTest)}}</td>
+        <td>{{wtf.form_field(setModelForm.endOfTest)}}</td>
+    </tr>    
+    </table>
+    {{wtf.form_field(setModelForm.setModelSubmit)}}
+    {{wtf.form_field(setModelForm.setModelText)}}
+<img src="{{ url_for('static', filename=test_predict_image)}}" height="500" width="800" alt='test_predict_image'>
+</form>
+<hr/>
+<br>
+
+<h3>6. Residual Test </h3>
+<form method="post" enctype="multipart/form-data">
+    {{ residualTestForm.hidden_tag() }}
+    {{wtf.form_field(residualTestForm.residualTestSubmit)}}
+    {{wtf.form_field(residualTestForm.residualTestText)}}
+</form>
+<img src="{{ url_for('static', filename=residual_test_image1) }}" height="500" width="800" alt='residual_test_image1'>
+<img src="{{ url_for('static', filename=residual_test_image2) }}" height="500" width="800" alt='residual_test_image2'>
+<hr/>
+<br>
+
+<h3>7. Prediction </h3>
+<form method="post" enctype="multipart/form-data">
+    {{ predictForm.hidden_tag() }}
+    <table border="1px" class="table">
+    <tr>
+        <td>{{wtf.form_field(predictForm.urlField)}}</td>
+        <td>{{wtf.form_field(predictForm.sampleInterval)}}</td>
+        <td>{{wtf.form_field(predictForm.reportID)}}</td>
+    </tr>
+    </table>
+    {{wtf.form_field(predictForm.predictionSubmit)}}
+    {{wtf.form_field(predictForm.predictionText)}}
+</form>
+
+{% endblock %}

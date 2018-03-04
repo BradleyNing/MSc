@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+<form method="POST">
+	{{form.csrf_token}}
+	{{wtf.form_field(form.name)}}
+	{{wtf.form_field(form.did)}}
+	{{wtf.form_field(form.location)}}
+	{{wtf.form_field(form.dtype)}}
+	{{wtf.form_field(form.publish)}}
+</form>
+<p><a href="{{ url_for('index') }}">Click here to index</a>.</p>
+{% endblock %}

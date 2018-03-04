@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+<form method="post" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <table border="1px" class="table">
+    <tr>
+		<td> {{wtf.form_field(form.startSubmit)}} </td>
+		<td> {{wtf.form_field(form.stopSubmit)}} </td>
+        <td>  </td>
+	</tr>
+    <tr>
+        <td> {{wtf.form_field(form.rptID)}} </td>
+        <td> {{wtf.form_field(form.numRecords)}} </td>
+        <td> {{wtf.form_field(form.getSubmit)}} </td>
+    </tr>
+    </table>
+    {{wtf.form_field(form.resText)}}
+</form>
+{% endblock %}

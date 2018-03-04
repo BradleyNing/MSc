@@ -1,0 +1,108 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<title>Data Analysis as a Service</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.css"/>
+	<link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+
+<body>
+	<div class="container">
+	<a href="index.html" class="head"> Home </a>
+	<h3 class="head">Test Demo for Data Analysis as a Service</h3>
+	<hr>
+	<div>
+		<h4>1.Image text recoginition and translation</h4>
+		<div id="preview"></div>
+	    <input type="file" onchange="preview(this)" />
+	    <script type="text/JavaScript">
+	    function preview(file) 
+	    {
+	    	var prevDiv = document.getElementById('preview');
+      		var reader = new FileReader();
+      		reader.onload = function(evt) {
+        		prevDiv.innerHTML = '<img id="Imgfile" src="' + evt.target.result + '" />';}
+      		reader.readAsDataURL(file.files[0]);
+  		}
+  		</script>
+  		<input type="button" value="upload" onClick="uploadImg();">
+    	<script type="text/JavaScript">
+        function uploadImg() {
+            //alert("uploadImg");
+            img = document.getElementById("Imgfile");
+            //alert(img);
+            var base64Img = getBase64Image(img);    
+            //alert(content);  
+
+		    var ItemJSON;
+    		ItemJSON = {api: "ITRT", verison:"1.0", content:base64Img};
+            ItemJSON = JSON.stringify(ItemJSON)
+            //ItemJSON = {api: "ITRT", verison:"1.0"}
+    		URL = "http://127.0.0.1:8080/daas/";  //Your URL
+    		//alert(URL)
+    		var xmlhttp = new XMLHttpRequest();
+    		xmlhttp.onreadystatechange = callbackFunction(xmlhttp);
+    		xmlhttp.open("GET", URL, false);
+    		xmlhttp.setRequestHeader("Content-Type", "application/json");
+    		//xmlhttp.setRequestHeader("Authorization", "Basic " + btoa("Demo:Demo")); 
+    		//xmlhttp.onreadystatechange = callbackFunction(xmlhttp);
+    		xmlhttp.send();
+    		alert("in"+xmlhttp.responseText); 
+        };   
+        function getBase64Image(img) {
+            // Create an empty canvas element
+            var canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            // Copy the image contents to the canvas
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+
+            // Get the data-URL formatted image
+            // Firefox supports PNG and JPEG. You could check img.src to
+            // guess the original format, but be aware the using "image/jpg"
+            // will re-encode the image.
+            var dataURL = canvas.toDataURL("image/png");
+
+            return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+        };
+        function PostImge(base64Img)
+		{
+		    var ItemJSON;
+    		ItemJSON = {"api": "ITRT", "verison":"1.0", "content":base64Img};
+
+    		URL = "http://127.0.0.1:9000/daas";  //Your URL
+    		alert(URL)
+    		var xmlhttp = new XMLHttpRequest();
+    		//xmlhttp.onreadystatechange = callbackFunction(xmlhttp);
+    		xmlhttp.open("POST", URL, false);
+    		xmlhttp.setRequestHeader("Content-Type", "application/json");
+    		xmlhttp.setRequestHeader('Authorization', 'Basic ' + window.btoa('Demo:Demo')); //in prod, you should encrypt user name and password and provide encrypted keys here instead 
+    		xmlhttp.onreadystatechange = callbackFunction(xmlhttp);
+    		xmlhttp.send(ItemJSON);
+    		//alert(xmlhttp.responseText);
+		}
+		function callbackFunction(xmlhttp) 
+		{
+    		alert("out"+xmlhttp.responseText);
+		}
+    	</script>
+		<hr>
+	</div>
+
+	<div>
+		<h4>2.Movie review sentiment prediction and learning</h4>
+		<hr>
+	</div>
+	<div>
+		<h4>3.Stream data analysis and abnomal detection</h4>
+		<hr>
+	</div>
+	<div>
+		<h4>4.General purpose data analysis and performance</h4>
+		<hr>
+	</div>
+	</div>
+</body>
+</html>

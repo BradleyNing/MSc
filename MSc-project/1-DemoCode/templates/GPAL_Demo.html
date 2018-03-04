@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+<h3>1. Training File </h3>
+<form method="post" enctype="multipart/form-data">
+    {{ trainingForm.hidden_tag() }}
+    <table border="1px" class="table">
+    	<tr>
+    		<td> {{wtf.form_field(trainingForm.trainingFile)}} </td>
+    		<td> {{wtf.form_field(trainingForm.trainLabelCol)}} </td>
+    		<td> {{wtf.form_field(trainingForm.trainAlgoSelect)}} </td>
+    	</tr>
+    </table>
+<table border="1px" class="table">
+  <tr>
+    <th>Header</th> <th>Pre-Processing</th> <th>Scaler</th> <th>Run Mode</th>
+  </tr>
+  <tr>
+    <td> {{wtf.form_field(trainingForm.headOption)}} </td>
+    <td> {{wtf.form_field(trainingForm.preProcessOption)}} </td>
+    <td> {{wtf.form_field(trainingForm.scalerOption)}}</td>
+    <td> {{wtf.form_field(trainingForm.runOption)}} </td>
+  </tr>	
+</table>	
+	{{wtf.form_field(trainingForm.trainSubmit)}} 
+	{{wtf.form_field(trainingForm.trainText)}}
+    {{wtf.form_field(trainingForm.resTrainText)}}
+</form>
+<hr/>
+<br>
+
+<h3>2. Test File </h3>
+<form method="post" enctype="multipart/form-data">
+    {{ testForm.hidden_tag() }}
+    <table>
+    <tr>
+		<td>{{wtf.form_field(testForm.testFile)}} </td>
+        <td>{{wtf.form_field(testForm.testLabelCol)}} </td>        
+	</tr>
+	</table>
+    {{wtf.form_field(testForm.testSubmit)}}
+	{{wtf.form_field(testForm.testText)}}
+    {{wtf.form_field(testForm.resTestText)}}
+</form>
+<hr/>
+<br>
+
+<h3>3. Predict </h3>
+<form method="post" enctype="multipart/form-data">
+    {{ predictForm.hidden_tag() }}
+    <table>
+    <tr>
+        <td>{{wtf.form_field(predictForm.predAlgoSelect)}}</td>
+    </tr>
+    </table>
+    {{wtf.form_field(predictForm.predictSubmit)}}
+	{{wtf.form_field(predictForm.predictText)}}
+</form>
+<hr/>
+<br>
+<br>
+<br>
+{% endblock %}

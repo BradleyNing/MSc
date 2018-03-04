@@ -1,0 +1,61 @@
+<html>
+<head>
+    <title>Sensor Manager</title>
+    <meta http-equiv="refresh" content="2.0">
+</head>
+
+<style>
+	.btn {width: 126px;}
+	div {margin: 10px;}
+</style>
+
+<body>
+	<table border="1">
+		<caption><strong>Sensor Manager</strong></caption>
+		<thead>
+			<tr><th height="30">Sensor</th>
+			<th><center>Current</center></th>
+			<th><center>Max</center></th>
+			<th><center>Min</center></th></tr>
+		</thead>
+		<tbody>
+			<tr><td width="136" height="30"><center>Temperature(c)</center></td>
+			<td width="136"><center>{{temp}}</center></td>
+			<td width="136"><center>{{tempMax}}</center></td>
+			<td width="136"><center>{{tempMin}}</center></td></tr>
+			<tr><td height="30"><center>Humidity(%)</center></td>
+			<td><center>{{humi}}</td>
+			<td><center>{{humiMax}}</td>
+			<td><center>{{humiMin}}</td></tr>
+		</tbody>
+	</table>
+	<br>
+	<form action="{{ url_for('post') }}" method="POST">
+		<div>
+		IF 
+	 	<select name="sType">
+  			<option value="temp">Temperature</option>
+		  	<option value="humi">Humidity</option>
+		</select> 		
+		<strong> > </strong> 
+		<input type="number" name="threshold" value="21">  		
+		THEN, LED will Blink 
+		<input class="btn" type="submit" name="submit" value="ThresholdConfirm"> <br>
+		</div>
+		<div>
+		Blinking Frequence(0.1-10)
+		<input type="number" name="freq" value="10" min="1" max="100">
+		<input class="btn" type="submit" name="submit" value="FreqConfirm"> <br>
+		</div>
+		<div>
+		Switch on/off blinking
+		<input class="btn" type="submit" name="submit" value="Blink">
+		<input class="btn" type="submit" name="submit" value="NoBlink">
+		</div>
+	</form>
+		
+	</form>
+
+</div>
+</body>
+</html>

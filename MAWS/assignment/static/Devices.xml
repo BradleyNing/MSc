@@ -1,0 +1,21 @@
+<?xml version = "1.0"?>
+<DeviceList>
+	<Device>
+		<name>Guilford1</name>
+		<id>1</id>
+		<location>Surrey University</location>
+		<type>sensor</type>
+	</Device>
+	<Device>
+		<name>London1</name>
+		<id>2</id>
+		<location>UCL</location>
+		<type>sensor</type>
+	</Device>
+	<Device>
+		<name>Reading1</name>
+		<id>3</id>
+		<location>Oracle shopping mall</location>
+		<type>actutor</type>
+	</Device>
+</DeviceList>

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+<h3>File Split Tool </h3>
+<form method="post" enctype="multipart/form-data">
+    {{ filePrepareForm.hidden_tag() }}
+    <table class='table'>
+    <tr>
+        <td>{{wtf.form_field(filePrepareForm.rawFile)}}</td>
+        <td>{{wtf.form_field(filePrepareForm.headSelect)}}</td>
+        <td>{{wtf.form_field(filePrepareForm.labelCol)}}</td>
+        <td>{{wtf.form_field(filePrepareForm.testRatio)}}</td>
+        <td>{{wtf.form_field(filePrepareForm.splitSubmit)}}</td>
+    </tr>
+    </table>
+</form>
+{% endblock %}

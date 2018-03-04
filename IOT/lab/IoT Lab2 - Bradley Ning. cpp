@@ -1,0 +1,59 @@
+#include "contiki.h"
+#include <stdio.h>
+#include <stdlib.h>
+/*---------------------------------------------------------------------------*/
+PROCESS(hello_world_process, "Hello world process");
+AUTOSTART_PROCESSES(&hello_world_process);
+/*---------------------------------------------------------------------------*/
+
+void Myprint(float f);
+
+PROCESS_THREAD(hello_world_process, ev, data)
+{
+    PROCESS_BEGIN();
+
+    printf("Hello, world from Bradley Ning\n");
+    
+	int i=0;
+	float f, sum=0;
+	for (i=0; i<10; i++)
+	{
+		f=(float)(rand()%100)/100.0;
+		Myprint(f);
+		sum=sum+f;
+	}
+	printf("Sum of the above 10 randoms are:");
+	Myprint(sum);
+
+    PROCESS_END();
+}
+
+void Myprint(float f)
+{
+	int temp_int;
+	float temp_f;
+
+	if(f >= 1.0)   // sum of the randoms will greater than or equal 1;
+	{
+		temp_int = (int)f;
+		printf("%d.", temp_int);
+		f = f - temp_int;
+	}
+	else
+		printf("0.");
+
+	while(f>0)
+	{
+		temp_f = f*10;
+		temp_int = (int)temp_f;
+		if(temp_int>=1)
+			printf("%d", temp_int);
+		else
+			printf("0");
+
+		f = temp_f - temp_int;
+	}
+	printf("\n");
+}
+
+/*---------------------------------------------------------------------------*/

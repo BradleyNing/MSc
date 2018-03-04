@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<form method="post" enctype="multipart/form-data">
+{{ form.hidden_tag() }}
+
+<head>
+  <meta charset=utf-8 />
+  <title></title>
+  <script src='https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.js'></script>
+  <link href='https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.css' rel='stylesheet'/>
+  <script src="{{ url_for('static', filename=mapfile) }}"></script>
+  <style>
+    body { margin:0; padding:0; }
+    .map { position:absolute; top:0; bottom:0; width:100%; }
+  </style>
+</head>
+</form>
+<body>
+<div id='map-leaflet' class='map'> </div>
+<script>
+L.mapbox.accessToken = 'pk.eyJ1IjoiYnJhZGxleW5pbmciLCJhIjoiY2oxdno5NDNjMDAxMzJxbnU3OWgxcDF0ciJ9.ZeG_k_V3ACGsHwH9wSCJBA';
+var mapLeaflet = L.mapbox.map('map-leaflet', 'mapbox.light').setView([56.21, 10.16], 11);
+
+	for ( var i=0; i < markers.length; ++i ) 
+	{
+	   L.circle( [markers[i].lat, markers[i].lng],
+		{
+			color: markers[i].color,
+			//fillColor:'#f03',
+			fillOpacity:1,
+			radius:100
+		}).bindPopup('<a>'+markers[i].reportId+'</a>').addTo(mapLeaflet);  
+	}
+
+mapLeaflet.scrollWheelZoom.disable();
+</script>
+</body>
+</html>
+

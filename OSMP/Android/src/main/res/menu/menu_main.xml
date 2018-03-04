@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/connectSensor"
+        android:title="Connect to the sensor"
+        android:showAsAction="ifRoom|withText"
+        tools:ignore="AppCompatResource" />
+    <item android:id="@+id/disconnect"
+        android:title="Disonnect to the sensor"
+        android:showAsAction="ifRoom|withText"
+        tools:ignore="AppCompatResource" />
+    <item android:id="@+id/controlLed"
+        android:title="Control LED"
+        android:showAsAction="ifRoom|withText"
+        tools:ignore="AppCompatResource" />
+    <item android:id="@+id/jointAction"
+        android:title="Cofigure joint action"
+        android:showAsAction="ifRoom|withText"
+        tools:ignore="AppCompatResource" />
+</menu>
