@@ -942,41 +942,50 @@ class GPAL(object):
         start = time.time()
         if req['algorithm'] == DAAS_DEF.alg_lr:
             if self.gs_lr is None:
-                estimator = LogisticRegression(C=1.0, random_state=DAAS_DEF.random_state)
+                estimator = LogisticRegression(C=1.0, 
+                                               random_state=DAAS_DEF.random_state,
+                                               n_jobs=1)
             else:
                 estimator = self.gs_lr
         elif req['algorithm'] == DAAS_DEF.alg_knn:
             if self.gs_knn is None:
-                estimator = KNeighborsClassifier(n_neighbors=5)
+                estimator = KNeighborsClassifier(n_neighbors=5,
+                                                 n_jobs=1)
             else:
                 estimator = self.gs_knn
         elif req['algorithm'] == DAAS_DEF.alg_rfc:
             if self.gs_rfc is None:
                 estimator = RandomForestClassifier(n_estimators=300, 
                                      max_features='auto', 
-                                     random_state=DAAS_DEF.random_state)
+                                     random_state=DAAS_DEF.random_state,
+                                     n_jobs=1)
             else:
                 estimator = self.gs_rfc
         elif req['algorithm'] == DAAS_DEF.alg_combine:
             if self.gs_lr is None:
-                lr = LogisticRegression(C=1.0, random_state=DAAS_DEF.random_state)
+                lr = LogisticRegression(C=1.0, 
+                                        random_state=DAAS_DEF.random_state,
+                                        n_jobs=1)
             else:
                 lr = self.gs_lr
 
             if self.gs_rfc is None:
                 rfc = RandomForestClassifier(n_estimators=300, 
-                                     max_features='auto', 
-                                     random_state=DAAS_DEF.random_state)
+                                             max_features='auto', 
+                                             random_state=DAAS_DEF.random_state,
+                                             n_jobs=1)
             else:
                 rfc = self.gs_rfc
 
             if self.gs_knn is None:
-                knn = KNeighborsClassifier(n_neighbors=5)
+                knn = KNeighborsClassifier(n_neighbors=5,
+                                           n_jobs=1)
             else:
                 knn = self.gs_knn
 
-            estimator = VotingClassifier(estimators=[('lr', lr), 
-                            ('rfc', rfc),('knn',knn)], voting='soft')
+            estimator = VotingClassifier(estimators=[('lr', lr), ('rfc', rfc),('knn',knn)], 
+                                         voting='soft',
+                                         n_jobs=1)
         else:
             #assert(False)
             return DAAS_DEF.BAD_REQUEST
