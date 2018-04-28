@@ -489,7 +489,8 @@ class GPAL(object):
         scores = cross_val_score(estimator = estimator,
                                  X = self.X_train,
                                  y = self.y_train,
-                                 cv = DAAS_DEF.cv_num)
+                                 cv = DAAS_DEF.cv_num,
+                                 n_jobs=1)
         logging.info('In score, X_train shape: '+str(self.X_train.shape))
         mean_score = np.mean(scores)
 
@@ -506,15 +507,15 @@ class GPAL(object):
             result = self.Get_Scores(estimator)
             return result
         elif self.algorithm == DAAS_DEF.alg_lr:
-            estimator = LogisticRegression(random_state=DAAS_DEF.random_state)
+            estimator = LogisticRegression(random_state=DAAS_DEF.random_state, n_jobs=1)
             result = self.Get_Scores(estimator)
             return result
         elif self.algorithm == DAAS_DEF.alg_knn:
-            estimator = KNeighborsClassifier(n_neighbors=3)
+            estimator = KNeighborsClassifier(n_neighbors=3, n_jobs=1)
             result = self.Get_Scores(estimator)
             return result
         elif self.algorithm == DAAS_DEF.alg_rfc:
-            estimator = RandomForestClassifier(random_state=DAAS_DEF.random_state)
+            estimator = RandomForestClassifier(random_state=DAAS_DEF.random_state, n_jobs=1)
             result = self.Get_Scores(estimator)
             return result
         elif self.algorithm == DAAS_DEF.alg_gnb:
@@ -573,7 +574,8 @@ class GPAL(object):
             param_grid = dict(C=param_range)
             gs_lr = GridSearchCV(estimator=lr, 
                                  param_grid=param_grid, 
-                                 cv=DAAS_DEF.cv_num)
+                                 cv=DAAS_DEF.cv_num,
+                                 n_jobs=1)
             gs_lr.fit(self.X_train, self.y_train)
             result_lr = self.GetResult(gs_lr, self.X_train, self.y_train, param_range)
             end = time.time()
@@ -594,7 +596,8 @@ class GPAL(object):
             param_grid = dict(n_neighbors=param_range)
             gs_knn = GridSearchCV(estimator=knn, 
                                   param_grid=param_grid, 
-                                  cv=DAAS_DEF.cv_num)
+                                  cv=DAAS_DEF.cv_num,
+                                  n_jobs=1)
             gs_knn.fit(self.X_train, self.y_train)
             result_knn = self.GetResult(gs_knn, self.X_train, self.y_train, param_range)
             end = time.time()
@@ -616,7 +619,8 @@ class GPAL(object):
                 'max_features': ['sqrt', 'log2']}
             gs_rfc = GridSearchCV(estimator=rfc, 
                                   param_grid=param_grid, 
-                                  cv=DAAS_DEF.cv_num)
+                                  cv=DAAS_DEF.cv_num,
+                                  n_jobs=1)
             gs_rfc.fit(self.X_train, self.y_train)
             result_rfc = self.GetResult(gs_rfc, self.X_train, self.y_train, param_grid)
             end = time.time()
@@ -646,7 +650,8 @@ class GPAL(object):
             param_grid = dict(C=param_range)
             gs_lr = GridSearchCV(estimator=lr, 
                                  param_grid=param_grid, 
-                                 cv=DAAS_DEF.cv_num)
+                                 cv=DAAS_DEF.cv_num,
+                                 n_jobs=1)
             gs_lr = gs_lr.fit(self.X_train, self.y_train)
             result_lr = self.GetResult(gs_lr, self.X_train, self.y_train, param_range)
             lr_info = {'alalgorithm': 'LogisticRegression',
@@ -663,7 +668,8 @@ class GPAL(object):
             param_grid = dict(n_neighbors=param_range)
             gs_knn = GridSearchCV(estimator=knn, 
                                   param_grid=param_grid, 
-                                  cv=DAAS_DEF.cv_num)
+                                  cv=DAAS_DEF.cv_num,
+                                  n_jobs=1)
             gs_knn = gs_knn.fit(self.X_train, self.y_train)
             result_knn = self.GetResult(gs_knn, self.X_train, self.y_train, param_range)
             knn_info = {'alalgorithm': 'KNeighborsClassifier',
@@ -680,7 +686,8 @@ class GPAL(object):
                 'max_features': ['sqrt', 'log2']}
             gs_rfc = GridSearchCV(estimator=rfc, 
                                   param_grid=param_grid, 
-                                  cv=DAAS_DEF.cv_num)
+                                  cv=DAAS_DEF.cv_num,
+                                  n_jobs=1)
             gs_rfc = gs_rfc.fit(self.X_train, self.y_train)
             result_rfc = self.GetResult(gs_rfc, self.X_train, self.y_train, param_grid)
             rfc_info = {'alalgorithm': 'RandomForestClassifier',
@@ -935,41 +942,50 @@ class GPAL(object):
         start = time.time()
         if req['algorithm'] == DAAS_DEF.alg_lr:
             if self.gs_lr is None:
-                estimator = LogisticRegression(C=1.0, random_state=DAAS_DEF.random_state)
+                estimator = LogisticRegression(C=1.0, 
+                                               random_state=DAAS_DEF.random_state,
+                                               n_jobs=1)
             else:
                 estimator = self.gs_lr
         elif req['algorithm'] == DAAS_DEF.alg_knn:
             if self.gs_knn is None:
-                estimator = KNeighborsClassifier(n_neighbors=5)
+                estimator = KNeighborsClassifier(n_neighbors=5,
+                                                 n_jobs=1)
             else:
                 estimator = self.gs_knn
         elif req['algorithm'] == DAAS_DEF.alg_rfc:
             if self.gs_rfc is None:
                 estimator = RandomForestClassifier(n_estimators=300, 
                                      max_features='auto', 
-                                     random_state=DAAS_DEF.random_state)
+                                     random_state=DAAS_DEF.random_state,
+                                     n_jobs=1)
             else:
                 estimator = self.gs_rfc
         elif req['algorithm'] == DAAS_DEF.alg_combine:
             if self.gs_lr is None:
-                lr = LogisticRegression(C=1.0, random_state=DAAS_DEF.random_state)
+                lr = LogisticRegression(C=1.0, 
+                                        random_state=DAAS_DEF.random_state,
+                                        n_jobs=1)
             else:
                 lr = self.gs_lr
 
             if self.gs_rfc is None:
                 rfc = RandomForestClassifier(n_estimators=300, 
-                                     max_features='auto', 
-                                     random_state=DAAS_DEF.random_state)
+                                             max_features='auto', 
+                                             random_state=DAAS_DEF.random_state,
+                                             n_jobs=1)
             else:
                 rfc = self.gs_rfc
 
             if self.gs_knn is None:
-                knn = KNeighborsClassifier(n_neighbors=5)
+                knn = KNeighborsClassifier(n_neighbors=5,
+                                           n_jobs=1)
             else:
                 knn = self.gs_knn
 
-            estimator = VotingClassifier(estimators=[('lr', lr), 
-                            ('rfc', rfc),('knn',knn)], voting='soft')
+            estimator = VotingClassifier(estimators=[('lr', lr), ('rfc', rfc),('knn',knn)], 
+                                         voting='soft',
+                                         n_jobs=1)
         else:
             #assert(False)
             return DAAS_DEF.BAD_REQUEST
