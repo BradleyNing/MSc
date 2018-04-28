@@ -1,3 +1,4 @@
+server_address = 'http://34.253.185.114:9999/daas'
 with_header = 'WithHeader'
 no_hearder = 'WithoutHeader'
 train_file = 'Train'

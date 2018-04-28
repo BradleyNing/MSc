@@ -25,6 +25,7 @@ app=Flask(__name__)
 app.config['SECRET_KEY'] = 'hard to guess string'
 Bootstrap(app)
 
+server_address = DAAS_DEF.server_address
 mapfile = 'test'  # for SDA
 # for ARIMA
 raw_file_info = None
@@ -48,7 +49,7 @@ def data_collect():
     res_info='DAAS response: '
     if form.startSubmit.data:
         req_body = {'type':DAAS_DEF.start}
-        url = 'http://192.168.1.113:9999/daas/SDA_admin'
+        url = server_address + '/SDA_admin'
         header = {'Content-Type': 'application/json'}
         #auth=HTTPBasicAuth('Bradley-ZN00046', 'Bradley-ZN00046')
         res = requests.post(url, 
@@ -66,7 +67,7 @@ def data_collect():
 
     if form.stopSubmit.data:
         req_body = {'type':DAAS_DEF.stop}
-        url = 'http://192.168.1.113:9999/daas/SDA_admin'
+        url = server_address + '/SDA_admin'
         header = {'Content-Type': 'application/json'}
         auth=HTTPBasicAuth('Bradley-ZN00046', 'Bradley-ZN00046')
         res = requests.post(url, 
@@ -89,7 +90,7 @@ def data_collect():
                 'latest_n':numRecords}
         req_body = {'type':DAAS_DEF.get_data,
                     'para':para}
-        url = 'http://192.168.1.113:9999/daas/SDA_admin'
+        url = server_address + '/SDA_admin'
         header = {'Content-Type': 'application/json'}
         auth=HTTPBasicAuth('Bradley-ZN00046', 'Bradley-ZN00046')
         res = requests.post(url, 
@@ -117,7 +118,7 @@ def data_collect():
         body={'version':'v1','para':{'url':url,
         'speed_max':speed_max,'count_max':count_max,'rpt_id':rpt_id}}
 
-        url = 'http://192.168.1.113:9999/daas/SDA_alert'
+        url = server_address + '/SDA_alert'
         header = {'Content-Type': 'application/json'}
         res = requests.post(url, headers=header, json=body)        
         if(res.status_code !=201):
@@ -147,7 +148,7 @@ def itrt_demo():
         Imgcontent = imageFile.read()
         base64_image = base64.b64encode(Imgcontent).decode()
 
-        url = 'http://192.168.1.113:9999/daas/ITRT'
+        url = server_address + '/ITRT'
         header = {'Content-Type': 'application/json'}
         body = {'version':'v1','content':base64_image}
         res = requests.post(url, headers=header, json=body)
@@ -209,7 +210,7 @@ def arima_demo():
                     "para": para,
                     "file": file}
 
-        url = 'http://192.168.1.113:9999/daas/SDA_ARIMA'
+        url = server_address + '/SDA_ARIMA'
         header = {'Content-Type': 'application/json'}
         res = requests.post(url, headers=header, json=req_body)
 
@@ -242,7 +243,7 @@ def arima_demo():
                     "command": DAAS_DEF.stat_white_test
                     }
 
-        url = 'http://192.168.1.113:9999/daas/SDA_ARIMA'
+        url = server_address + '/SDA_ARIMA'
         header = {'Content-Type': 'application/json'}
         res = requests.post(url, headers=header, json=req_body)
         stat_noise_test_info = 'DAAS response status_code: '+str(res.status_code)+'\n'
@@ -295,7 +296,7 @@ def arima_demo():
                 "para": para,
                 "command": DAAS_DEF.differentiation
                 }
-        url = 'http://192.168.1.113:9999/daas/SDA_ARIMA'
+        url = server_address + '/SDA_ARIMA'
         header = {'Content-Type': 'application/json'}
         res = requests.post(url, headers=header, json=req_body)
         diff_info = 'DAAS response status_code: '+str(res.status_code)+'\n'
@@ -334,7 +335,7 @@ def arima_demo():
                 "para": para,
                 "command": DAAS_DEF.search_pdq
                 }
-        url = 'http://192.168.1.113:9999/daas/SDA_ARIMA'
+        url = server_address + '/SDA_ARIMA'
         header = {'Content-Type': 'application/json'}
         res = requests.post(url, headers=header, json=req_body)
         get_pdq_info = 'DAAS response status_code: '+str(res.status_code)+'\n'
@@ -374,7 +375,7 @@ def arima_demo():
                 "command": DAAS_DEF.create_model
                 }
         logging.info('date:'+str(type(eDateOfTest))+str(eDateOfTest))
-        url = 'http://192.168.1.113:9999/daas/SDA_ARIMA'
+        url = server_address + '/SDA_ARIMA'
         header = {'Content-Type': 'application/json'}
         res = requests.post(url, headers=header, json=req_body)
         set_model_info = 'DAAS response status_code: '+str(res.status_code)+'\n'
@@ -417,7 +418,7 @@ def arima_demo():
         req_body = {"version": "v1",
                     "command": DAAS_DEF.residual_test
                     }
-        url = 'http://192.168.1.113:9999/daas/SDA_ARIMA'
+        url = server_address + '/SDA_ARIMA'
         header = {'Content-Type': 'application/json'}
         res = requests.post(url, headers=header, json=req_body)
         residual_test_info = 'DAAS response status_code: '+str(res.status_code)+'\n'
@@ -537,7 +538,7 @@ def DemoIndex():
         trainingForm.trainText.data = train_info
         trainingFile.close()
 
-        url = 'http://192.168.1.113:9999/daas/GPAL'
+        url = server_address + '/GPAL'
         header = {'Content-Type': 'application/json'}
         res = requests.post(url, headers=header, json=req_body)
         if (not res):
@@ -583,7 +584,7 @@ def DemoIndex():
                 "train_para": train_para,
                 "testLabelCol": testLabelCol,
                 "file": file}
-        url = 'http://192.168.1.113:9999/daas/GPAL'
+        url = server_address + '/GPAL'
         header = {'Content-Type': 'application/json'}
         res = requests.post(url, headers=header, json=req_body)
         if (not res):
@@ -606,7 +607,7 @@ def DemoIndex():
         req_body = {"version": "v1",
                     "type": DAAS_DEF.predict,
                     "algorithm": algorithm}
-        url = 'http://192.168.1.113:9999/daas/GPAL'
+        url = server_address + '/GPAL'
         header = {'Content-Type': 'application/json'}
         res = requests.post(url, headers=header, json=req_body)
         if (not res):
